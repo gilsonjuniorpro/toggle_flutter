@@ -1,30 +1,89 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:toggle_flutter/main.dart';
+import 'package:core_eng_apps/common/app_theme.dart';
+import 'package:core_eng_apps/your_path/compass_tile_with_chevron.dart'; // Adjust the path accordingly
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('CompassTileWithChevron renders title and chevron icon', (WidgetTester tester) async {
+    const title = 'Sample Title';
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CompassTileWithChevron(
+            title: title,
+          ),
+        ),
+        theme: AppTheme.lightTheme, // Provide a theme for context
+      ),
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(find.text(title), findsOneWidget);
+    expect(find.byIcon(Icons.chevron_right), findsOneWidget);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('CompassTileWithChevron renders custom navIcon when provided', (WidgetTester tester) async {
+    const title = 'Custom Icon Tile';
+    const customIcon = Icon(Icons.home);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CompassTileWithChevron(
+            title: title,
+            navIcon: customIcon,
+          ),
+        ),
+        theme: AppTheme.lightTheme,
+      ),
+    );
+
+    expect(find.byIcon(Icons.home), findsOneWidget);
+    expect(find.byIcon(Icons.chevron_right), findsNothing);
+  });
+
+  testWidgets('CompassTileWithChevron applies padding correctly', (WidgetTester tester) async {
+    const title = 'Padded Title';
+    const paddingContent = 16.0;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CompassTileWithChevron(
+            title: title,
+            paddingContent: paddingContent,
+          ),
+        ),
+        theme: AppTheme.lightTheme,
+      ),
+    );
+
+    final titleFinder = find.text(title);
+    final titleWidget = tester.widget(titleFinder) as Text;
+    final titlePadding = titleWidget.padding;
+    expect(titlePadding.top, paddingContent);
+    expect(titlePadding.bottom, paddingContent);
+  });
+
+  testWidgets('CompassTileWithChevron calls onPress function when tapped', (WidgetTester tester) async {
+    var wasPressed = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CompassTileWithChevron(
+            title: 'Tappable Tile',
+            onPress: () => wasPressed = true,
+          ),
+        ),
+        theme: AppTheme.lightTheme,
+      ),
+    );
+
+    await tester.tap(find.byType(CompassTileWithChevron));
+    await tester.pump(); // Flush microtasks
+
+    expect(wasPressed, true);
   });
 }
