@@ -17,6 +17,9 @@ samples, guidance on mobile development, and a full API reference.
 
 ![screenshot.png](screenshot.png)
 
+<img src="screenshot.png" alt="Screenshot" width="200"/>
+
+
 
 
 
