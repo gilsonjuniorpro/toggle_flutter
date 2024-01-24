@@ -49,25 +49,37 @@ class _SingleChoiceState extends State<SingleChoice> {
           value: OrdemItem.active,
           label: Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Text('Active orders'),
+            child: Text(
+              'Active orders',
+            ),
           ),
         ),
         ButtonSegment<OrdemItem>(
           value: OrdemItem.past,
           label: Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Text('Past orders'),
+            child: Text(
+              'Past orders',
+            ),
           ),
         ),
       ],
       selected: <OrdemItem>{ordemItem},
       style: ButtonStyle(
         // Change background color for selected state
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
           if (states.contains(MaterialState.selected)) {
             return Colors.blue; // Replace with your desired color
           }
           return null; // Use the default color for unselected states
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white; // Selected text color
+          }
+          return Colors.blue; // Unselected text color
         }),
       ),
       showSelectedIcon: false,
