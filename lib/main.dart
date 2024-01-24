@@ -81,6 +81,9 @@ class _SingleChoiceState extends State<SingleChoice> {
           }
           return Colors.blue; // Unselected text color
         }),
+        side: MaterialStateProperty.all<BorderSide>(
+          BorderSide(color: Colors.grey, width: 3.0),
+        ),
       ),
       showSelectedIcon: false,
       onSelectionChanged: (Set<OrdemItem> newSelection) {
