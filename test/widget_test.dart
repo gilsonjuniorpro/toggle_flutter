@@ -22,7 +22,7 @@ void main() {
     expect(find.byType(SafeArea), findsOneWidget);
     expect(find.byType(Column), findsNWidgets(2)); // Header and content
     expect(find.byType(SingleChildScrollView), findsOneWidget);
-    expect(find.byType(CompassOrderCard), findsNWidgets(3));
+    expect(find.byType(CompassOrderCard), findsNWidgets(4));
 
     // Header
     expect(find.text('Orders'), findsOneWidget);
